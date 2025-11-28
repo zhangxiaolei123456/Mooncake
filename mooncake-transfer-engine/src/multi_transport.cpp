@@ -107,7 +107,7 @@ Status MultiTransport::submitTransfer(
         assert(transport);
         auto &task = batch_desc.task_list[task_id];
         task.batch_id = batch_id;
-#ifdef USE_ASCEND_HETEROGENEOUS OR USE_TCP_PERFORMANCE
+#if defined(USE_ASCEND_HETEROGENEOUS) || defined(USE_TCP_PERFORMANCE)
         task.request = const_cast<Transport::TransferRequest *>(&request);
 #else
         task.request = &request;
