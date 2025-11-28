@@ -4,7 +4,7 @@ add_subdirectory(rdma_transport)
 add_library(transport OBJECT ${XPORT_SOURCES} $<TARGET_OBJECTS:rdma_transport>)
 target_link_libraries(transport PRIVATE JsonCpp::JsonCpp yalantinglibs::yalantinglibs glog::glog pthread)
 
-if (USE_TCP)
+if (USE_TCP OR USE_TCP_PERFORMANCE)
   add_subdirectory(tcp_transport)
   target_sources(transport PUBLIC $<TARGET_OBJECTS:tcp_transport>)
 endif()
