@@ -23,6 +23,9 @@
 #ifdef USE_TCP
 #include "transport/tcp_transport/tcp_transport.h"
 #endif
+#ifdef USE_TCP_PERFORMANCE
+#include "transport/tcp_transport/tcp_transport_performance.h"
+#endif
 #include "transport/transport.h"
 #ifdef USE_NVMEOF
 #include "transport/nvmeof_transport/nvmeof_transport.h"
@@ -104,7 +107,7 @@ Status MultiTransport::submitTransfer(
         assert(transport);
         auto &task = batch_desc.task_list[task_id];
         task.batch_id = batch_id;
-#ifdef USE_ASCEND_HETEROGENEOUS
+#ifdef USE_ASCEND_HETEROGENEOUS OR USE_TCP_PERFORMANCE
         task.request = const_cast<Transport::TransferRequest *>(&request);
 #else
         task.request = &request;
@@ -213,6 +216,11 @@ Transport *MultiTransport::installTransport(const std::string &proto,
 #ifdef USE_TCP
     else if (std::string(proto) == "tcp") {
         transport = new TcpTransport();
+    }
+#endif
+#ifdef USE_TCP_PERFORMANCE
+    else if (std::string(proto) == "tcp") {
+        transport = new TcpTransportPerformance();
     }
 #endif
 #ifdef USE_NVMEOF
