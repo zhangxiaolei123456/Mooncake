@@ -152,6 +152,10 @@ if (USE_TCP)
   add_compile_definitions(USE_TCP)
 endif()
 
+if (USE_TCP_PERFORMANCE)
+  add_compile_definitions(USE_TCP_PERFORMANCE)
+endif()
+
 if (USE_BAREX)
   add_compile_definitions(USE_BAREX)
 endif()
